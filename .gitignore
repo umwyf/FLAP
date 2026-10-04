@@ -1,0 +1,37 @@
+# Paper draft (not part of the code release)
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+
+# Environments
+.env
+.venv/
+venv/
+
+# Data, indices, checkpoints, outputs
+data/
+indexes/
+checkpoints/
+outputs/
+wandb/
+*.faiss
+*.index
+*.npy
+*.bin
+*.safetensors
+*.pt
+*.ckpt
+*.log
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

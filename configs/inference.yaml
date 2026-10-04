@@ -1,0 +1,52 @@
+# FLAP inference configuration (Section 3.1 / Appendix D.2-D.3).
+
+# Off-the-shelf search agent (executor model).  Any Qwen2.5-Instruct size works.
+agent:
+  backend: vllm            # hf | vllm
+  model: Qwen/Qwen2.5-7B-Instruct
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.45
+  max_model_len: 4096
+
+# Planner model: base model + LoRA adapter trained with scripts/train_planner.py
+planner:
+  backend: vllm
+  model: Qwen/Qwen2.5-7B-Instruct
+  adapter: checkpoints/flap-planner-7b
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.45
+  max_model_len: 4096
+  generation:
+    max_new_tokens: 1024
+    temperature: 0.0
+
+# Retrieval backend (Table 10): wiki-18 corpus, E5 retriever, top-3 passages
+retriever:
+  kind: http
+  url: http://127.0.0.1:8000
+
+# Algorithm 1 / Table 11
+execution:
+  search_budget: 2          # B: max search attempts per plan step (1 disables local replanning)
+  top_k: 3
+  max_passage_words: 256
+  query_temperature: 0.7
+  query_top_p: 0.95
+  answer_temperature: 0.0
+  check_temperature: 0.0
+  max_new_tokens: 512
+  max_context_tokens: 4096
+  max_extra_turns: 2
+  max_total_turns: 12
+  default_verification: pass
+  # ablations (Table 3)
+  inject_check: true
+  local_replanning: true
+  use_paraphrases: true
+  open_ended_injection: true
+
+eval:
+  data_root: data
+  datasets: [nq, hotpotqa, triviaqa, popqa, 2wikimultihopqa, musique, bamboogle]
+  batch_size: 64
+  output_dir: outputs/flap-7b

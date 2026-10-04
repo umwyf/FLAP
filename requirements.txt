@@ -1,0 +1,26 @@
+# Core
+torch>=2.1
+transformers>=4.44
+accelerate>=0.30
+peft>=0.11
+datasets>=2.19
+huggingface_hub>=0.23
+numpy>=1.24
+pyyaml>=6.0
+tqdm>=4.66
+requests>=2.31
+
+# Retrieval server / client
+faiss-cpu>=1.7.4      # use faiss-gpu for a GPU index
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.0
+
+# Optional: fast batched inference for planner / search agent
+# vllm>=0.6
+
+# Optional: frontier LLM for planner data construction (OpenAI-compatible API)
+openai>=1.30
+
+# Tests
+pytest>=8.0

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flap-search"
+version = "0.1.0"
+description = "FLAP: Failure-Aware Planning for Search Agents"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+hf = ["torch>=2.1", "transformers>=4.44", "accelerate>=0.30", "peft>=0.11", "datasets>=2.19", "huggingface_hub>=0.23"]
+vllm = ["vllm>=0.6"]
+retrieval = ["faiss-cpu>=1.7.4", "fastapi>=0.110", "uvicorn>=0.29", "pydantic>=2.0", "torch>=2.1", "transformers>=4.44"]
+openai = ["openai>=1.30"]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+include = ["flap*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
